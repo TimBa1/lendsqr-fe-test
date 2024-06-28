@@ -16,6 +16,7 @@ interface props {
   setStatus: (arg: string) => void;
   filter: () => void;
   reset: () => void;
+  org: any;
 }
 
 function Modal({
@@ -32,15 +33,25 @@ function Modal({
   status,
   setStatus,
   filter,
-  reset
+  reset,
+  org,
 }: props) {
   return (
     <div className="modal-filter">
       <div>
         <label>Username</label>
-        <select>
-        <option >Select</option>
-          <option value=""></option>
+        <select
+          value={organization}
+          onChange={(e) => setOrganization(e.target.value)}
+        >
+          <option value={""}>Select</option>
+          {org &&
+            Array.isArray(org) &&
+            org.map((op, i) => (
+              <option value={op.profile.company} key={i + 1}>
+                {op.profile.company}
+              </option>
+            ))}
         </select>
       </div>
       <div>
@@ -82,7 +93,7 @@ function Modal({
       <div>
         <label>Phone Number</label>
         <select value={status} onChange={(e) => setStatus(e.target.value)}>
-        <option >Select</option>
+          <option>Select</option>
           <option value="Active">Active</option>
           <option value="Blacklisted">Blacklisted</option>
           <option value="Pending">Pending</option>
@@ -90,8 +101,12 @@ function Modal({
         </select>
       </div>
       <div className="buttons">
-        <button onClick={reset}  className="reset">Reset</button>
-        <button onClick={filter} className="filter">Filter</button>
+        <button onClick={reset} className="reset">
+          Reset
+        </button>
+        <button onClick={filter} className="filter">
+          Filter
+        </button>
       </div>
     </div>
   );

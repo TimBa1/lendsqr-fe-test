@@ -19,7 +19,8 @@ function Users() {
   const [list, setList] = useState<any>({});
   const [filterState, setFilterState] = useState<any[]>(list);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(25);
+  const [limit, setLimit] = useState(50);
+  const [fu, setFu] = useState(filterState);
 
   //Filters
   const [organization, setOrganization] = useState("");
@@ -28,8 +29,9 @@ function Users() {
   const [date, setDate] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState("");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
+  // FETCH USERS
   const getUsers = async () => {
     setLoad(true);
     try {
@@ -47,33 +49,71 @@ function Users() {
     }
   };
 
+  const [triggerFilter, setTriggerFilter] = useState(false);
+
+  // to fetch all data
   useEffect(() => {
     window.scrollTo(0, 0);
     getUsers();
   }, []);
 
+  //UseEffect for filtering
+
+  // useEffect(() => {
+  //   if (list.length > 0) {
+  //     setFilterState(list);
+  //   }
+  // }, [list,page,limit,filterState]);
+
+  //UseEffect for Pagination
+
+  console.log(fu)
+
   useEffect(() => {
-    if (list.length > 0) {
-      setFilterState(list);
+
+    const filteredList = Array.isArray(list)
+    ? list.filter(
+        (item: any) =>
+          (!status || item.status === status) &&
+          (!username || item.username === username) &&
+          (!phone || item.profile.phone === phone) &&
+          (!organization || item.profile.company === organization) &&
+          (!email || item.email === email) &&
+          (!date || item.createdAt === date)
+      )
+    : [];
+    setFilterState(filteredList);
+
+    if (filterState.length > 0) {
+      // Get current pages
+      const indexOfLastItem = page * limit;
+      const indexOfFirstItem = indexOfLastItem - limit;
+      const currentItems = filterState.slice(indexOfFirstItem, indexOfLastItem);
+      setFu(currentItems);
       setLoad(false);
     }
-  }, [list]);
-
+  }, [
+    triggerFilter,
+    list,
+    status,
+    username,
+    phone,
+    organization,
+    email,
+    date,
+    page,
+    limit,
+    filterState
+  ]);
 
   const handleFilter = () => {
-    const filteredList = Array.isArray(list)
-      ? list.filter(
-          (item: any) =>
-            (!status || item.status === status) &&
-            (!username || item.username === username) &&
-            (!phone || item.profile.phone === phone) &&
-            (!organization || item.profile.company === organization) &&
-            (!email || item.email === email) &&
-            (!date || item.createdAt === date)
-        )
-      : [];
-    setFilterState(filteredList);
+    setTriggerFilter(!triggerFilter);
   };
+
+  //FILTER USER BY FIELDS
+  useEffect(() => {
+   
+  }, [triggerFilter, list, status, username, phone, organization, email, date]);
 
   const reset = () => {
     setOrganization("");
@@ -84,6 +124,7 @@ function Users() {
     setUsername("");
   };
 
+  //STATUS COLOR
   const badgeColor = (status: string) => {
     if (status.includes("Pending")) {
       return "yellow";
@@ -97,6 +138,9 @@ function Users() {
       return "red";
     }
   };
+
+  // Change page
+  const paginate = (page: number) => setPage(page);
 
   return (
     <div className="users">
@@ -124,30 +168,6 @@ function Users() {
         </div>
       </div>
 
-      <div className="modal-head">
-        {isOpen && (
-          <Modal
-            organization={organization}
-            setOrganization={setOrganization}
-            phone={phone}
-            setPhone={setPhone}
-            email={email}
-            setEmail={setEmail}
-            date={date}
-            setDate={setDate}
-            username={username}
-            setUsername={setUsername}
-            status={status}
-            setStatus={setStatus}
-            filter={() => {
-              setIsOpen(false);
-              handleFilter();
-            }}
-            reset={() => reset()}
-          />
-        )}
-      </div>
-
       <div className="table-body">
         <div className="table-responsive">
           <table className="table">
@@ -162,6 +182,7 @@ function Users() {
                   >
                     <img src={filter} alt="filter" />
                   </span>
+                  <div></div>
                 </th>
                 <th>
                   Username{" "}
@@ -216,9 +237,9 @@ function Users() {
                 <th></th>
               </tr>
             </thead>
-            {!load && list?.length > 0 && (
+            {!load && fu?.length > 0 ? (
               <tbody>
-                {filterState?.slice(0, 10).map((tr: any, i: number) => (
+                {fu.map((tr: any, i: number) => (
                   <tr key={tr.id}>
                     <td>{tr.profile.company}</td>
                     <td>{tr.username}</td>
@@ -243,24 +264,56 @@ function Users() {
                   </tr>
                 ))}
               </tbody>
+            ) : (
+              !load && (
+                <div className="bot">
+                  <h2>No Data Found</h2>
+                </div>
+              )
             )}
           </table>
         </div>
 
-        {!load && list?.meta?.last_page > 1 && (
-          <Paginate
-            currentPage={page}
-            totalCount={list?.meta?.total}
-            pageSize={limit}
-            lastPage={list?.meta?.last_page}
-            onSelect={(p: number) => setPage(Number(p))}
-            onNext={(p: number) => setPage(p)}
-            onPrev={(p: number) => setPage(p)}
-            changeLimit={(p: string) => setLimit(Number(p))}
+        {isOpen && (
+          <Modal
+            organization={organization}
+            setOrganization={setOrganization}
+            phone={phone}
+            setPhone={setPhone}
+            email={email}
+            setEmail={setEmail}
+            date={date}
+            setDate={setDate}
+            username={username}
+            setUsername={setUsername}
+            status={status}
+            setStatus={setStatus}
+            filter={() => {
+              setIsOpen(false);
+              handleFilter();
+            }}
+            reset={() => {
+              reset();
+              handleFilter();
+            }}
+            org={filterState}
           />
         )}
-        {load && <LoadTable />}
       </div>
+      {!load && (
+        <Paginate
+          itemsPerPage={limit}
+          totalItems={filterState?.length}
+          paginate={paginate}
+          currentPage={page}
+          changeLimit={(p: string) => setLimit(Number(p))}
+          onSelect={(p: number) => setPage(Number(p))}
+          onNext={(p: number) => setPage(p)}
+          onPrev={(p: number) => setPage(p)}
+        />
+      )}
+      {load && <LoadTable />}
+      <div className="modal-head"></div>
     </div>
   );
 }

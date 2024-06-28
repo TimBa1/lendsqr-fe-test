@@ -1,4 +1,5 @@
 .users {
+  position:relative;
   .title {
     font-weight: 500;
     font-size: 24px;
@@ -28,6 +29,13 @@
       font-size: 24px;
     }
   }
+  .bot {
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+  }
 }
 
 .filter {
@@ -45,6 +53,7 @@
   width: 100%;
   background-color: white;
   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.05);
+  position: relative;
 }
 .table-responsive {
   padding: 15px 30px;
@@ -76,8 +85,6 @@ table.table {
     }
   }
 
-  
-
   td {
     font-weight: 300;
     font-size: 14px;
@@ -91,31 +98,28 @@ table.table {
       }
     }
 
-	.badge{
-		padding:10px 13px;
-		border-radius: 100px;
-		
-		&.green{
-			color:#39CD62;
-			background-color: #ebfbf0;
-		}
-		&.black{
-			color:#545F7D;
-			background-color: #f7f8fa;
-		}
-		
-		&.red{
-		color:#E4033B !important;
-			background-color: #fff0f4 !important;
-		}
-				&.yellow{
-			color:#E9B200;
-			background-color: #faf8ee;
-		}
-		
-		
+    .badge {
+      padding: 10px 13px;
+      border-radius: 100px;
 
-	}
+      &.green {
+        color: #39cd62;
+        background-color: #ebfbf0;
+      }
+      &.black {
+        color: #545f7d;
+        background-color: #f7f8fa;
+      }
+
+      &.red {
+        color: #e4033b !important;
+        background-color: #fff0f4 !important;
+      }
+      &.yellow {
+        color: #e9b200;
+        background-color: #faf8ee;
+      }
+    }
   }
 }
 
@@ -146,15 +150,18 @@ table.table {
     select {
       border: 1px solid #c4c7db;
       outline: 0;
-      height: 38px;
+      width: 60px;
+      height: 30px;
       border-radius: 4px;
       padding-left: 5px;
       margin-right: 5px;
-      color: #333;
+      color: $brand-color2;
+      background-color: rgba(33, 63, 125, 0.1);
     }
     span {
-      color: #333;
-      font-size: 0.9rem;
+      color: #8a8b8d;
+      font-size: 14px;
+      margin: 0 5px;
     }
   }
 
@@ -172,13 +179,21 @@ table.table {
       outline: 0;
       margin: 0 8px;
       background: #fff;
-      border: 1px solid #c4c7db;
-      padding: 5px 14px;
-      border-radius: 3px;
+      padding: 5px 8px;
+      font-size: 19px;
+      border: none;
+      color: #72747a;
+      background-color: $background;
+
+      .box-page {
+        background-color: rgba(70, 92, 137, 0.1);
+        width: 30px;
+        border-radius: 8px;
+        padding: 5px 1px;
+      }
 
       &.active {
-        background: $brand-color;
-        color: #fff;
+        color: $brand-color2;
       }
     }
   }
@@ -199,7 +214,9 @@ table.table {
       font-weight: 600;
     }
   }
-  .modal-head{
-    position:relative;
-  }
 }
+//  .modal-head{
+//     position:relative;
+   
+
+//   }

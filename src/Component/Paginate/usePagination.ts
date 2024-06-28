@@ -2,59 +2,55 @@ import { useMemo } from "react";
 
 export const DOTS = "...";
 
+const usePagination = ({
+  totalItems,
+  itemsPerPage,
+  currentPage,
+}: {
+  totalItems: any;
+  itemsPerPage: any;
+  currentPage: any;
+}) => {
+  const paginationRange = useMemo(() => {
+    const totalPageCount = Math.ceil(totalItems / itemsPerPage);
+
+    const totalNumbers = 3;
+    const totalBlocks = totalNumbers + 2;
+
+    if (totalPageCount > totalBlocks) {
+      const startPage = Math.max(2, currentPage - 1);
+      const endPage = Math.min(totalPageCount - 1, currentPage + 1);
+      const pages = range(startPage, endPage);
+
+      const hasLeftSpill = startPage > 2;
+      const hasRightSpill = totalPageCount - endPage > 1;
+      const spillOffset = totalNumbers - (pages.length + 1);
+
+      switch (true) {
+        case hasLeftSpill && !hasRightSpill: {
+          const extraPages = range(startPage - spillOffset, startPage - 1);
+          return [1, DOTS, ...extraPages, ...pages, totalPageCount];
+        }
+        case !hasLeftSpill && hasRightSpill: {
+          const extraPages = range(endPage + 1, endPage + spillOffset);
+          return [1, ...pages, ...extraPages, DOTS, totalPageCount];
+        }
+        case hasLeftSpill && hasRightSpill:
+        default: {
+          return [1, DOTS, ...pages, DOTS, totalPageCount];
+        }
+      }
+    }
+
+    return range(1, totalPageCount);
+  }, [totalItems, itemsPerPage, currentPage]);
+
+  return paginationRange;
+};
+
 const range = (start: any, end: any) => {
-	let length = end - start + 1;
-	return Array.from({ length }, (_, idx) => idx + start);
+  let length = end - start + 1;
+  return Array.from({ length }, (_, idx) => idx + start);
 };
 
-export const usePagination = ({
-	totalCount,
-	pageSize,
-	siblingCount = 1,
-	currentPage,
-}: any) => {
-	const paginationRange = useMemo(() => {
-		const totalPageCount = Math.ceil(totalCount / pageSize);
-
-		const totalPageNumbers = siblingCount + 5;
-
-		if (totalPageNumbers >= totalPageCount) {
-			return range(1, totalPageCount);
-		}
-
-		const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-		const rightSiblingIndex = Math.min(
-			currentPage + siblingCount,
-			totalPageCount
-		);
-
-		const shouldShowLeftDots = leftSiblingIndex > 3;
-		const shouldShowRightDots = rightSiblingIndex + 2 < totalPageCount - 2;
-
-		const firstPageIndex = 1;
-		const lastPageIndex = totalPageCount;
-
-		if (!shouldShowLeftDots && shouldShowRightDots) {
-			let leftItemCount = 3 + 2 * siblingCount;
-			let leftRange = range(1, leftItemCount);
-
-			return [...leftRange, DOTS, totalPageCount];
-		}
-
-		if (shouldShowLeftDots && !shouldShowRightDots) {
-			let rightItemCount = 3 + 2 * siblingCount;
-			let rightRange = range(
-				totalPageCount - rightItemCount + 1,
-				totalPageCount
-			);
-			return [firstPageIndex, DOTS, ...rightRange];
-		}
-
-		if (shouldShowLeftDots && shouldShowRightDots) {
-			let middleRange = range(leftSiblingIndex, rightSiblingIndex + 2);
-			return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
-		}
-	}, [totalCount, pageSize, siblingCount, currentPage]);
-
-	return paginationRange;
-};
+export default usePagination;
