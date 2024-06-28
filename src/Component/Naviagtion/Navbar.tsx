@@ -38,7 +38,7 @@ function Navbar({open,setOpen}:{setOpen:(arg:boolean)=>void, open:boolean}) {
           </span>
           <span className='nav-cont'>
             <img src={Avatar} alt="avatar" />{" "}
-            <span className="name">{data}</span>
+            <span className="name">{data.substring(0,10)}...</span>
             <div className="dropdown">
               <div className="dropbtn">
                 <i className=" arrow-down"></i>

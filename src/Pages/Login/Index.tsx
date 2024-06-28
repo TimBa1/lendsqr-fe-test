@@ -46,12 +46,12 @@ function Login() {
               <div className='show-pass'>
                 {" "}
                 <input
-                  type="Password"
+                  type={show ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder={show ? "text" : "password"}
+                  placeholder='Password'
                 />
-                <span className='hide-pass'>SHOW</span>
+                <span onClick={()=> setShow(!show)} className='hide-pass'>SHOW</span>
               </div>
 
               <p className="pass">Forgot password?</p>
