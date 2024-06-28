@@ -65,31 +65,16 @@ function Users() {
   //   }
   // }, [list,page,limit,filterState]);
 
+
+
   //UseEffect for Pagination
-
-  console.log(fu)
-
   useEffect(() => {
-
-    const filteredList = Array.isArray(list)
-    ? list.filter(
-        (item: any) =>
-          (!status || item.status === status) &&
-          (!username || item.username === username) &&
-          (!phone || item.profile.phone === phone) &&
-          (!organization || item.profile.company === organization) &&
-          (!email || item.email === email) &&
-          (!date || item.createdAt === date)
-      )
-    : [];
-    setFilterState(filteredList);
-
     if (filterState.length > 0) {
       // Get current pages
       const indexOfLastItem = page * limit;
       const indexOfFirstItem = indexOfLastItem - limit;
       const currentItems = filterState.slice(indexOfFirstItem, indexOfLastItem);
-      setFu(currentItems);
+      setFu(currentItems);  
       setLoad(false);
     }
   }, [
@@ -103,7 +88,6 @@ function Users() {
     date,
     page,
     limit,
-    filterState
   ]);
 
   const handleFilter = () => {
@@ -112,7 +96,18 @@ function Users() {
 
   //FILTER USER BY FIELDS
   useEffect(() => {
-   
+    const filteredList = Array.isArray(list)
+      ? list.filter(
+          (item: any) =>
+            (!status || item.status === status) &&
+            (!username || item.username === username) &&
+            (!phone || item.profile.phone === phone) &&
+            (!organization || item.profile.company === organization) &&
+            (!email || item.email === email) &&
+            (!date || item.createdAt === date)
+        )
+      : [];
+    setFilterState(filteredList);
   }, [triggerFilter, list, status, username, phone, organization, email, date]);
 
   const reset = () => {

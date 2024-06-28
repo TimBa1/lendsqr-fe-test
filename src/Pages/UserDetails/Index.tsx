@@ -1,5 +1,4 @@
-import React from "react";
-import { IoIosArrowRoundBack } from "react-icons/io";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import avatar from "../../Assets/1.svg";
 import back from "../../Assets/np_back_3007750_000000 1.svg";
@@ -8,6 +7,7 @@ import star from "../../Assets/tier.svg";
 function UserDetail() {
   const navigate = useNavigate();
   const details = useLocation().state;
+  const [active, setActive] = useState(1);
 
   return (
     <div className="details">
@@ -24,32 +24,66 @@ function UserDetail() {
       </div>
       <div className="heading">
         <div className="user-details">
-          <img src={avatar} alt="avatar" />
-          <div className="name">
-            <div className="fullname">
-              {details?.name || "Timilehin Bakare"}
+          <div className="flex-item">
+            <img src={avatar} alt="avatar" />
+            <div className="name">
+              <div className="fullname">
+                {details?.name || "Timilehin Bakare"}
+              </div>
+              <div className="fn">1223455667</div>
             </div>
-            <div className="fn">1223455667</div>
+            <div className="line"></div>
           </div>
-          <div className="line"></div>
-          <img src={star} alt="avatar" />
-          <div className="line"></div>
-          <div className="account">
-            <div className="amt">200,000</div>
-            <div className="number">2008112824/Kuda Bank</div>
+
+          <div className="flex-item1">
+            <img src={star} alt="avatar" />
+            <div className="line1"></div>
+            <div className="account">
+              <div className="amt">₦200,000.00</div>
+              <div className="number">2008112824/Kuda Bank</div>
+            </div>
           </div>
         </div>
         <div className="heading-list">
-          <div className="item active">Personal Details</div>
-          <div className="item">Documents</div>
-          <div className="item">Bank details</div>
-          <div className="item">Loans</div>
-          <div className="item">savings</div>
-          <div className="item">Apps and System</div>
+          <div
+            onClick={() =>setActive(1)}
+            className={`item ${active === 1 ? "active" : ""}`}
+          >
+            Personal Details
+          </div>
+          <div
+            onClick={() =>setActive(2)}
+            className={`item ${active === 2 ? "active" : ""}`}
+          >
+            Documents
+          </div>
+          <div
+            onClick={() =>setActive(3)}
+            className={`item ${active === 3 ? "active" : ""}`}
+          >
+            Bank details
+          </div>
+          <div
+            onClick={() =>setActive(4)}
+            className={`item ${active === 4 ? "active" : ""}`}
+          >
+            Loans
+          </div>
+          <div
+            onClick={() =>setActive(5)}
+            className={`item ${active === 5 ? "active" : ""}`}
+          >
+            savings
+          </div>
+          <div
+            onClick={() =>setActive(6)}
+            className={`item ${active === 6 ? "active" : ""}`}
+          >
+            Apps and System
+          </div>
         </div>
       </div>
       <div className="info-container">
-
         <div>
           <h3 className="title">Personal Information</h3>
           <div className="flex-container">
@@ -122,7 +156,7 @@ function UserDetail() {
             </div>
           </div>
         </div>
-        <div className="line"></div> 
+        <div className="line"></div>
 
         <div>
           <h3 className="title">Socials</h3>
@@ -141,8 +175,7 @@ function UserDetail() {
             </div>
           </div>
         </div>
-        <div className="line"></div> 
-
+        <div className="line"></div>
 
         <div>
           <h3 className="title">Guarantor</h3>
@@ -165,7 +198,7 @@ function UserDetail() {
             </div>
           </div>
         </div>
-        <div className="line"></div> 
+        <div className="line"></div>
 
         <div>
           <h3 className="title"></h3>
@@ -188,14 +221,11 @@ function UserDetail() {
             </div>
           </div>
         </div>
-        <div className=""></div> 
-        
+        <div className=""></div>
+
       </div>
-    </div> 
+    </div>
   );
 }
 
 export default UserDetail;
-
-
-

@@ -18,11 +18,17 @@
       height: 160px;
       box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.05);
       padding: 20px 25px;
+
+      @media (max-width: 991px) {
+        width: 180px;
+        height: 160px;
+      }
     }
 
     h3 {
       font-weight: 500;
       font-size: 14px;
+      margin:1rem 0;
     }
     h2 {
       font-weight: 600;

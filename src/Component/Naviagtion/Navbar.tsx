@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../Assets/Group.svg";
 import search from "../../Assets/search.svg";
 import { Link } from "react-router-dom";
 import notification from "../../Assets/np_notification_2425223_000000 1.svg";
 import Avatar from "../../Assets/avatar.svg";
+import { RxHamburgerMenu } from "react-icons/rx";
 
-function Navbar() {
+function Navbar({open,setOpen}:{setOpen:(arg:boolean)=>void, open:boolean}) {
+  const [data, setData] = useState('')
+
+  useEffect(() =>{
+   const item= window.localStorage.getItem("@email") || "";
+    setData(item)
+  },[])
   return (
     <div className="navbar">
       <div className="cont">
         <div className="logo">
+          <span className='ham' onClick={()=>setOpen(!open)}><RxHamburgerMenu size={25}/></span>
+        
           <img src={logo} alt="logo" />
         </div>
         <div className="search-input">
@@ -21,7 +30,7 @@ function Navbar() {
           </span>
         </div>
         <div className="nav-items">
-          <span>
+          <span className='link'>
             <Link to="/">Docs</Link>
           </span>
           <span>
@@ -29,14 +38,14 @@ function Navbar() {
           </span>
           <span className='nav-cont'>
             <img src={Avatar} alt="avatar" />{" "}
-            <span className="name">Ayodele</span>
+            <span className="name">{data}</span>
             <div className="dropdown">
               <div className="dropbtn">
                 <i className=" arrow-down"></i>
               </div>
               <div className="dropdown-content">
                 <Link to="#">Settings</Link>
-                <Link to="#">Logoout</Link>
+                <Link to="/">Logout</Link>
               </div>
             </div>
           </span>

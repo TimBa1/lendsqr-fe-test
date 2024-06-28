@@ -13,11 +13,19 @@
     justify-content: space-between;
     align-items: center;
     margin: 2rem 0;
+    @media (max-width: 991px) {
+      flex-direction: column;
+      row-gap: 1rem;
+      align-items: flex-start;
+    }
 
     h2 {
       color: $brand-color2;
       font-size: 24px;
       font-weight: 500;
+      @media (max-width: 991px){
+        text-align: left;
+      }
     }
     .buttons {
       display: flex;
@@ -55,12 +63,49 @@
     background-color: white;
     box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.05);
     margin: 2rem 0;
+    @media (max-width: 991px) {
+     height:100%;
+     }
 
     .user-details {
       height: 100px;
       margin-bottom: 2rem;
       display: flex;
       align-items: center;
+      @media (max-width: 991px) {
+        flex-direction: column;
+        row-gap: 1rem;
+        height: 100%;
+        align-items:start;
+      }
+
+      .flex-item {
+        display: flex;
+        .line {
+          margin: 0 2rem;
+          width: 1px !important;
+          height: 90px !important;
+          background-color: #545f7d;
+  
+          @media (max-width: 991px) {
+            display: none;
+          }
+        }
+
+      }
+      .flex-item1 {
+        display: flex;
+        @media (max-width: 991px){
+          margin-left: 1rem;
+          align-items:center;
+        }
+        .line1 {
+          margin: 0 3rem;
+          width: .5px !important;
+          height: 90px !important;
+          background-color: #545f7d;}
+
+      }
 
       .name {
         display: flex;
@@ -92,12 +137,7 @@
           font-weight: 400;
         }
       }
-      .line {
-        margin: 0 2rem;
-        width: 1px !important;
-        height: 90%;
-        background-color: #545f7d;
-      }
+     
     }
     .heading-list {
       width: 100%;
@@ -147,7 +187,7 @@
       height: 0.5px;
       background: #213f7d;
       opacity: 10%;
-      margin:1rem 0;
+      margin: 1rem 0;
     }
     .title {
       font-size: 16px;
@@ -159,10 +199,17 @@
       display: flex;
       flex-wrap: wrap;
       column-gap: 1rem;
-      row-gap:1rem;
+      row-gap: 1rem;
+      @media (max-width: 991px){
+        justify-content: space-between;
+      }
     }
     .content {
-        width:180px;
+      width: 180px;
+      @media (max-width: 991px){
+        width:150px;
+      }
+      
       .top {
         font-size: 12px;
         font-weight: 400;

@@ -2,9 +2,9 @@ import React from "react";
 import NavLinks from "./NavLinks";
 import { menu } from "./menu";
 
-function SideBar() {
+function SideBar({open,setOpen}:{setOpen:(arg:boolean)=>void, open:boolean}) {
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${open?'open-m':""}`}>
       <div className="navigation">
         {menu.map((nav) => (
           <div className="key" key={nav.id}>

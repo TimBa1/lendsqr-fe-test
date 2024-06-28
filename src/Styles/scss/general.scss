@@ -28,6 +28,9 @@ body {
 
 .main-content {
   padding: 4% 6%;
+  @media (max-width: 991px) {
+    padding: 4% 4%;
+  }
 }
 
 .basic-card {
