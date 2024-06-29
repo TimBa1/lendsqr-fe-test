@@ -1,5 +1,4 @@
 import React from "react";
-import Select from "react-select";
 
 interface props {
   organization: string;

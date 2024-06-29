@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import authHeader from "../../Utils/headers";
 import dateFormat from "dateformat";
-import { HiDotsVertical } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import Modal from "../../Component/Modal/Index";
 import dots from '../../Assets/ic-more-vert-18px.svg'
