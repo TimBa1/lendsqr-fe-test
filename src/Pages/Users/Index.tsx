@@ -291,6 +291,7 @@ function Users() {
             reset={() => {
               reset();
               handleFilter();
+              setIsOpen(false);
             }}
             org={filterState}
           />
