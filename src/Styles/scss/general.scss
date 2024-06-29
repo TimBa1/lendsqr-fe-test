@@ -4,6 +4,23 @@ body {
   font-family: $font;
 }
 
+@font-face {
+  font-family: 'Avenir Next';
+  src: local('Lato'), url(../../Assets/fonts/AvenirNextLTPro-Regular.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-weight: 700;
+    src: local('Lato'), url(../../Assets/fonts/AvenirNextLTPro-It.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Avenir Next';
+    font-weight: 700;
+    src: local('Lato'), url(../../Assets/fonts/AvenirNextLTPro-Bold.otf) format('opentype');
+}
+
 .main-page {
   position: relative;
   display: block;

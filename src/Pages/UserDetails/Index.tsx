@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import avatar from "../../Assets/1.svg";
 import back from "../../Assets/np_back_3007750_000000 1.svg";
@@ -8,6 +8,13 @@ function UserDetail() {
   const navigate = useNavigate();
   const details = useLocation().state;
   const [active, setActive] = useState(1);
+
+  useEffect(() => {
+    if (!details) {
+      navigate("/dashboard/customers");
+    }
+    window.scrollTo(0, 0);
+  },[]);
 
   return (
     <div className="details">
@@ -28,7 +35,7 @@ function UserDetail() {
             <img src={avatar} alt="avatar" />
             <div className="name">
               <div className="fullname">
-                {details?.name || "Timilehin Bakare"}
+                {details?.profile?.name || "Timilehin Bakare"}
               </div>
               <div className="fn">1223455667</div>
             </div>
@@ -46,37 +53,37 @@ function UserDetail() {
         </div>
         <div className="heading-list">
           <div
-            onClick={() =>setActive(1)}
+            onClick={() => setActive(1)}
             className={`item ${active === 1 ? "active" : ""}`}
           >
             Personal Details
           </div>
           <div
-            onClick={() =>setActive(2)}
+            onClick={() => setActive(2)}
             className={`item ${active === 2 ? "active" : ""}`}
           >
             Documents
           </div>
           <div
-            onClick={() =>setActive(3)}
+            onClick={() => setActive(3)}
             className={`item ${active === 3 ? "active" : ""}`}
           >
             Bank details
           </div>
           <div
-            onClick={() =>setActive(4)}
+            onClick={() => setActive(4)}
             className={`item ${active === 4 ? "active" : ""}`}
           >
             Loans
           </div>
           <div
-            onClick={() =>setActive(5)}
+            onClick={() => setActive(5)}
             className={`item ${active === 5 ? "active" : ""}`}
           >
             savings
           </div>
           <div
-            onClick={() =>setActive(6)}
+            onClick={() => setActive(6)}
             className={`item ${active === 6 ? "active" : ""}`}
           >
             Apps and System
@@ -89,15 +96,15 @@ function UserDetail() {
           <div className="flex-container">
             <div className="content">
               <h6 className="top">Full Name</h6>
-              <h5 className="bottom">Gakare Timilehin</h5>
+              <h5 className="bottom">{details?.profile?.name}</h5>
             </div>
             <div className="content">
               <h6 className="top">phone Number</h6>
-              <h5 className="bottom">0987654321</h5>
+              <h5 className="bottom">{details?.profile?.phone}</h5>
             </div>
             <div className="content">
               <h6 className="top">Email</h6>
-              <h5 className="bottom">timilehinbakare.tn@gmail</h5>
+              <h5 className="bottom">{details?.email}</h5>
             </div>
             <div className="content">
               <h6 className="top">BVN</h6>
@@ -222,7 +229,6 @@ function UserDetail() {
           </div>
         </div>
         <div className=""></div>
-
       </div>
     </div>
   );

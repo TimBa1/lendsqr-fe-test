@@ -13,6 +13,12 @@ import dateFormat from "dateformat";
 import { HiDotsVertical } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import Modal from "../../Component/Modal/Index";
+import dots from '../../Assets/ic-more-vert-18px.svg'
+import { LiaEyeSolid } from "react-icons/lia";
+import active from '../../Assets/np_user_2995993_000000 1.svg'
+import inactive from '../../Assets/np_delete-friend_3248001_000000 1.svg'
+
+
 
 function Users() {
   const [load, setLoad] = useState(false);
@@ -30,6 +36,7 @@ function Users() {
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [triggerFilter, setTriggerFilter] = useState(false);
 
   // FETCH USERS
   const getUsers = async () => {
@@ -40,7 +47,6 @@ function Users() {
         { headers: authHeader() }
       );
       if (res) {
-        console.log(res.data);
         setList(res.data);
       }
     } catch (err) {
@@ -49,66 +55,51 @@ function Users() {
     }
   };
 
-  const [triggerFilter, setTriggerFilter] = useState(false);
-
   // to fetch all data
   useEffect(() => {
     window.scrollTo(0, 0);
     getUsers();
   }, []);
 
-  //UseEffect for filtering
-
-  // useEffect(() => {
-  //   if (list.length > 0) {
-  //     setFilterState(list);
-  //   }
-  // }, [list,page,limit,filterState]);
-
-
-
   //UseEffect for Pagination
+
   useEffect(() => {
     if (filterState.length > 0) {
       // Get current pages
       const indexOfLastItem = page * limit;
       const indexOfFirstItem = indexOfLastItem - limit;
       const currentItems = filterState.slice(indexOfFirstItem, indexOfLastItem);
-      setFu(currentItems);  
+      setFu(currentItems);
       setLoad(false);
     }
-  }, [
-    triggerFilter,
-    list,
-    status,
-    username,
-    phone,
-    organization,
-    email,
-    date,
-    page,
-    limit,
-  ]);
+  }, [triggerFilter, list, page, limit, filterState]);
 
   const handleFilter = () => {
     setTriggerFilter(!triggerFilter);
   };
 
-  //FILTER USER BY FIELDS
+  // FILTER USER BY FIELDS
+
   useEffect(() => {
     const filteredList = Array.isArray(list)
       ? list.filter(
           (item: any) =>
             (!status || item.status === status) &&
-            (!username || item.username === username) &&
-            (!phone || item.profile.phone === phone) &&
+            (!username ||
+              item.username.toLowerCase().includes(username.toLowerCase())) &&
+            (!phone ||
+              (item.profile.phone &&
+                item.profile.phone.toString().includes(phone))) &&
             (!organization || item.profile.company === organization) &&
-            (!email || item.email === email) &&
-            (!date || item.createdAt === date)
+            (!email ||
+              item.email.toLowerCase().includes(email.toLowerCase())) &&
+            (!date ||
+              (item.createdAt && item.createdAt.toString().includes(date)))
         )
       : [];
+
     setFilterState(filteredList);
-  }, [triggerFilter, list, status, username, phone, organization, email, date]);
+  }, [triggerFilter, list]);
 
   const reset = () => {
     setOrganization("");
@@ -169,7 +160,7 @@ function Users() {
             <thead>
               <tr>
                 <th>
-                  Organisation{" "}
+                  OrganiZation{" "}
                   <span
                     onClick={() => {
                       setIsOpen(!isOpen);
@@ -200,7 +191,7 @@ function Users() {
                   </span>
                 </th>
                 <th>
-                  phonenumber{" "}
+                  Phone Number{" "}
                   <span
                     onClick={() => {
                       setIsOpen(!isOpen);
@@ -232,6 +223,7 @@ function Users() {
                 <th></th>
               </tr>
             </thead>
+
             {!load && fu?.length > 0 ? (
               <tbody>
                 {fu.map((tr: any, i: number) => (
@@ -250,11 +242,20 @@ function Users() {
                       </div>
                     </td>
                     <td className="link">
-                      <Link to={`/dashboard/customers/${tr.id}`} state={tr}>
+                      <div>
                         <div className="link">
-                          <HiDotsVertical />
+                          <div className="dropdown">
+                            <div className="dropbtn">
+                              <img src={dots} alt='dots'/>
+                            </div>
+                            <div className="dropdown-content">
+                              <Link to={`/dashboard/customers/${tr.id}`} state={tr}><span className="img" ><LiaEyeSolid /></span>{'    '}View Details</Link>
+                              <Link to="#"><img className="img"  src={inactive} alt='dots'/>{'    '}Blacklist User</Link>
+                              <Link to="#"><img className="img" src={active} alt='dots'/>{'    '}Activate User</Link>
+                            </div>
+                          </div>
                         </div>
-                      </Link>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -308,6 +309,7 @@ function Users() {
         />
       )}
       {load && <LoadTable />}
+
       <div className="modal-head"></div>
     </div>
   );

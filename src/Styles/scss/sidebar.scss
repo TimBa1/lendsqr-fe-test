@@ -1,3 +1,54 @@
+.brief{
+  display: flex;
+   z-index: 99999;
+  padding: 1rem 0 0 30px;
+  margin-bottom: -2.5rem;
+  .brief-title{
+  img{
+    margin-right: 15px;
+  }
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    top:-1rem;
+    .dropbtn {
+      top: 2rem;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      padding-bottom: -2rem;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 200px;
+      right: 0.5rem;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {
+    background-color: $background;
+  }
+
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+}
+
 .sidebar {
   width: 283px;
   background-color: #fff;
@@ -85,7 +136,7 @@
   }
 
   .navigation {
-    padding: 20px 0 50px 0;
+    padding: 0 0 50px 0;
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;

@@ -10,13 +10,17 @@ function Login() {
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     try {
       window.localStorage.setItem("@email", email);
       toast.success("login Successful");
       navigate("/dashboard/home");
     } catch (err) {}
   };
+
+
+
   return (
     <div className="login">
       <div className="hero">
@@ -35,23 +39,27 @@ function Login() {
         <div className="form">
           <div className="container">
             <h2 className="greetings">Welcome!</h2>
-            <p className="title">Enter details to login</p>
+            <p className="title">Enter details to login.</p>
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
+                required
               />
-              <div className='show-pass'>
+              <div className="show-pass">
                 {" "}
                 <input
                   type={show ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder='Password'
+                  placeholder="Password"
+                  required
                 />
-                <span onClick={()=> setShow(!show)} className='hide-pass'>SHOW</span>
+                <span onClick={() => setShow(!show)} className="hide-pass">
+                  SHOW
+                </span>
               </div>
 
               <p className="pass">Forgot password?</p>

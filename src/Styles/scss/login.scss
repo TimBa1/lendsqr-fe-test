@@ -3,6 +3,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
+  font-family: Avenir Next, Arial, serif;;
 
   .hero {
     width: 50%;
@@ -90,8 +91,9 @@
         color:$brand-color;
         margin-top: 22px;
         font-weight:600;
-        font-size: 12px;
+        font-size: 11px;
         cursor: pointer;
+        text-transform: uppercase;
       }
       .sub-btn {
         height:48px;

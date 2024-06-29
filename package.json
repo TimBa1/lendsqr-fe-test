@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.0.0",
     "axios": "^1.7.2",
     "cra-template-typescript": "1.2.0",
+    "date-fns": "^3.6.0",
     "dateformat": "^5.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
