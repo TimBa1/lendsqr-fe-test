@@ -1,7 +1,6 @@
 .brief{
   display: flex;
    z-index: 99999;
-  padding: 1rem 0 0 30px;
   height: 20px!important;
   margin-bottom: 3rem;
   .brief-title{
@@ -12,7 +11,7 @@
   .dropdown {
     position: relative;
     display: inline-block;
-    
+
     .dropbtn {
       top: 2rem;
       color: white;
