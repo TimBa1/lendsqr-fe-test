@@ -133,7 +133,7 @@ function Users() {
       <div className="box">
         <div className="box-container">
           <img src={icon1} alt="icon" />
-          <h3>{"users"}</h3>
+          <h3>{"Users"}</h3>
           <h2>{"2,456"}</h2>
         </div>
         <div className="box-container">
